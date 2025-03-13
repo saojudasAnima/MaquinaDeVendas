@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../img/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+
+    overflow: hidden;
+}
+
+body .container {
+    width: 100vw;
+    height: 100vh;
+
+    position: relative;
+}
+
+.candy_machine {
+    position: absolute;
+    bottom: 10vh;
+    left: 25%;
+
+    width: max-content;
+    height: max-content;
+    cursor: pointer;
+    
+    transform: translate(-25%, 50px);
+    transition: all .2s ease-in-out;
+}
+
+.candy_machine:hover {
+    filter: brightness(1.2);
+}
+
+.candy_machine img {
+    width: 15rem;
+    height: auto;
+}
