@@ -11,32 +11,36 @@ A estrutura de diretórios está organizada da seguinte forma:
 ```
 candy-machine/
 │── app/                    # Diretório do back-end
+│   ├── Config/             # Configuração do sistema
+│   │   ├── Config.php      # Inicialização do sistema
+│   │   ├── Database.php    # Configuração do banco de dados
+│   │   ├── Routes.php      # Definição das rotas
+│   │
 │   ├── Controllers/        # Controladores (Lógica das rotas)
 │   │   ├── Api/            # Endpoints da API
 │   │   │   ├── Login.php   # Controle de login
 │   │   ├── Core/           # Classes base para controladores
 │   │   │   ├── BaseController.php
-│   │   ├── Helpers/        # Funções auxiliares
-│   │   │   ├── framework.php
-│   │   ├── Views/          # Arquivos HTML das views
+│   │
+│   ├── Helpers/        # Funções auxiliares
+│   │   ├── framework.php
+│   │
+│   ├── Views/          # Arquivos HTML das views
+│   │   ├── pages/      # Páginas HTML do front-end
 │   │   │   ├── index.html
-│   │  
-│   ├── config/             # Configuração do sistema
-│   │   ├── Config.php      # Inicialização do sistema
-│   │   ├── Database.php    # Configuração do banco de dados
-│   │   ├── Routes.php      # Definição das rotas
 │
 │── public/                 # Diretório acessível ao navegador (Front-end)
 │   ├── css/                # Estilos CSS
 │   │   ├── script.css  
+│   │
 │   ├── img/                # Imagens do projeto
 │   │   ├── candy_machine.png
 │   │   ├── fundo.jpg
 │   │   ├── img base maquina.png
-│   ├── pages/              # Páginas HTML do front-end
-│   │   ├── candyMachine.html
+│   │
 │   ├── script/             # Scripts JS do front-end
 │   │   ├── main.js
+│   │
 │   ├── .htaccess           # Arquivo de configuração do servidor Apache
 │   ├── index.php           # Arquivo de entrada para requisições do projeto
 │
@@ -56,10 +60,10 @@ A lógica do sistema está contida dentro do diretório `app/`, incluindo contro
 
 ## 🎨 **Front-end (HTML/CSS/JS)**
 O código do front-end está dentro do diretório `public/`, que contém:  
-- `pages/` → Páginas HTML.  
-- `css/` → Estilos CSS.  
-- `script/` → Arquivos JavaScript.  
-- `img/` → Imagens utilizadas na interface.  
+- `app/Views/pages/` → Páginas HTML.  
+- `public/css/` → Estilos CSS.  
+- `public/script/` → Arquivos JavaScript.  
+- `public/img/` → Imagens utilizadas na interface.  
 
 ## 🚀 Como rodar o projeto?
 1. Instale as dependências com o **Composer**:  

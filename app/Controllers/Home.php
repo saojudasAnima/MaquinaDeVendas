@@ -6,6 +6,6 @@ class Home extends Core\BaseController
 {
     public function index()
     {
-        return $this->view('index.html');
+        return $this->view('pages/index.html');
     }
 }
