@@ -1,118 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/script.css">
     <title>Máquina de Vendas</title>
-    <style>
-        .menu-container, .payment-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            display: none;
-            z-index: 10;
-        }
-
-        .options-list {
-            color: white;
-            margin-bottom: 20px;
-            text-align: left;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .numeric-input {
-            width: 80px;
-            height: 40px;
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .numeric-buttons, .payment-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .numeric-buttons button, .payment-options button {
-            width: 80px;
-            height: 60px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            background-color: #333;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .numeric-buttons button:hover, .payment-options button:hover {
-            background-color: #555;
-        }
-
-        .close-menu {
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 16px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .close-menu:hover {
-            background-color: darkred;
-        }
-
-        .candy_machine.zoom {
-            transform: scale(10);
-            position: absolute;
-            top: 70%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(4);
-            z-index: -1;
-        }
-    </style>
 </head>
+
 <body>
     <div class="container bottom">
-        <div class="candy_machine" onclick="toggleMenu()">
+        <div class="candy_machine" data-toggle="candy_machine">
             <img src="./img/candy_machine.png" alt="Máquina de Doces">
         </div>
     </div>
 
-    <div id="menu" class="menu-container">
+    <div id="menu" class="menu-container hidden">
         <h1 style="color: white;">Escolha um número</h1>
         <div class="options-list" id="options-list"></div>
         <input type="text" id="selected-number" class="numeric-input" maxlength="2" readonly>
         <div class="numeric-buttons">
-            <button onclick="enterNumber(1)">1</button>
-            <button onclick="enterNumber(2)">2</button>
-            <button onclick="enterNumber(3)">3</button>
-            <button onclick="enterNumber(4)">4</button>
-            <button onclick="enterNumber(5)">5</button>
-            <button onclick="enterNumber(6)">6</button>
-            <button onclick="enterNumber(7)">7</button>
-            <button onclick="enterNumber(8)">8</button>
-            <button onclick="enterNumber(9)">9</button>
-            <button onclick="clearNumber()">C</button>
-            <button onclick="enterNumber(0)">0</button>
-            <button onclick="confirmSelection()">✔</button>
+            <button data-value="1" class="enter-number">1</button>
+            <button data-value="2" class="enter-number">2</button>
+            <button data-value="3" class="enter-number">3</button>
+            <button data-value="4" class="enter-number">4</button>
+            <button data-value="5" class="enter-number">5</button>
+            <button data-value="6" class="enter-number">6</button>
+            <button data-value="7" class="enter-number">7</button>
+            <button data-value="8" class="enter-number">8</button>
+            <button data-value="9" class="enter-number">9</button>
+            <button data-value="C" class="enter-number">C</button>
+            <button data-value="0" class="enter-number">0</button>
+            <button data-toggle="payment">✔</button>
         </div>
-        <button class="close-menu" onclick="toggleMenu()">Fechar</button>
+        <button class="close-menu" data-toggle="candy_machine">Fechar</button>
     </div>
 
-    <div id="payment" class="menu-container">
+    <div id="payment" class="menu-container hidden">
         <h1 style="color: white;">Escolha a forma de pagamento</h1>
         <p id="selected-candy" style="color: white;"></p>
         <div class="payment-options">
@@ -120,40 +44,10 @@
             <button>Crédito</button>
             <button>Voucher</button>
         </div>
-        <button class="close-menu" onclick="hidePayment()">Voltar</button>
+        <button class="close-payment" data-toggle="payment">Voltar</button>
     </div>
 
-    <script>
-        const candies = [
-            "Snickers", "Twix", "Milky Way", "Barras de cereais", "Balas Mentos",
-            "Amendoins cobertos", "Gomas de mascar", "Wafers recheados", "Cookies",
-            "Bolinhos industriais", "Brownies", "Muffins", "Donuts", "Mini-marshmallows",
-            "Alfajor", "Chocolates recheados", "Pipoca doce", "Caramelos",
-            "Jujubas", "Mini-cookies"
-        ];
-
-        const prices = candies.map(() => (Math.random() * 5 + 2).toFixed(2));
-
-        function populateOptions() {
-            let optionsHtml = "";
-            candies.forEach((candy, index) => {
-                optionsHtml += `<p>${index + 1}. ${candy} - R$ ${prices[index]}</p>`;
-            });
-            document.getElementById("options-list").innerHTML = optionsHtml;
-        }
-
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            var machine = document.querySelector(".candy_machine");
-            if (menu.style.display === "none" || menu.style.display === "") {
-                populateOptions();
-                menu.style.display = "block";
-                machine.classList.add("zoom");
-            } else {
-                menu.style.display = "none";
-                machine.classList.remove("zoom");
-            }
-        }
-    </script>
+    <script src="./script/main.js"></script>
 </body>
+
 </html>
