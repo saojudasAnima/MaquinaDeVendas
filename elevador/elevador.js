@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let emMovimento = false;
   
     function atualizarVisual(andar) {
-      const container = document.getElementById("case2-container");
+      const container = document.getElementById("case2-background");
       container.style.backgroundImage = backgrounds[andar] === "white"
         ? "none"
         : `url(${backgrounds[andar]})`;
